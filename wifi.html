@@ -1,0 +1,274 @@
+<!DOCTYPE>
+<html>
+<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf8'>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<title>Helper</title>
+	<script src="jquery-3.1.1.min.js"></script>
+</head>
+<body>
+	<div id="mytimer"></div>
+	<div style="padding-top: 15%">
+
+		<div id="area" class="wrapper">
+
+			<center id="text_buttons">
+
+				<div id="question_text"></div>
+				<div id="but"></div>
+
+			
+				<script type="text/javascript">
+				timerStoper = 2;
+				tim = 5;
+				//вопросы
+				var question = ["Что не работает?", 
+								"Регистрировались ли вы на http://adsotr.s-vfu.ru/?", 
+								"Нельзя работать одновременно с нескольких устройств, отключите устройства оставьте только одно. Если не помогло обратитесь в службу поддержки по adsotr@s-vfu.ru с подробным описанием проблемы",
+								"Есть ли у Вас корпоративная почта ....@s-vfu.ru?",
+								"Вам необходимо зарегистрироваться на сайте http://adsotr.s-vfu.ru/",
+								"Что именно не знаете?",
+								"Обратитесь по адресу электронной почте da.nikiforov@s-vfu.ru, с указанием ФИО, подразделения, должности",
+								"Есть ли у Вас корпоративная почта ....@s-vfu.ru?",
+								"Обратитесь по адресу электронной почте web@s-vfu.ru",
+								"Регистрировались ли вы на http://aduser.s-vfu.ru/?",
+								"Нельзя работать одновременно с нескольких устройств, отключите устройства оставьте только одно. Если не помогло попробуйте восстановить пароль на http://aduser.s-vfu.ru/, если вы не можете восстановить пароль то напишите заявление рядом с терминалом (лоток 1)",	
+								"Вы иностранец? (Are you a foreigner?)",
+								"Напишите заявку с лотка 2 (Write an application to the Tray 2)",
+								"Зарегистрируйтесь на http://aduser.s-vfu.ru/",
+								"Регистрировались ли вы на http://aduser.s-vfu.ru/?",
+								"Убедитесь, что вы правильно вводите логин и пароль, если не помогло напишите заявку на удаление аккаунта (Лоток 1)",																	
+								"Вам следует обратится в кабинет 632А по соседству",
+								"Активацию карт проводит специалист Корякин Виктор Иванович обратитесь к нему кабинет 632"								
+								];
+
+				//уровни вложенности к вопросам
+
+				//работники
+				var level0 = ["Wi-Fi", "Не заходит на корпоративную почту", "Не заходит в личный кабинет"];
+				var level_wifi = ["Да", "Нет"];
+				var level_wifi_yes = [""];
+				var level_wifi_no = ["Да", "Нет"];
+				var level_lk = ["Перерегистрируйтесь на http://adsotr.s-vfu.ru/", "Нет"];
+				var level_email_yes = [""];
+				var level_email_no = ["Забыли пароль", "Не знаю адрес почты ...@s-vfu.ru", "Другое"];
+				var level_email = [""];
+
+				//студенты
+				var level_stud = ["Wi-Fi", "Не заходит в личный кабинет", "Вопросы по системе Moodle"];
+				var level_wifi_stud_foreigner = ["Да (Yes)", "Нет (No)"];
+				var level_wifi_stud = ["Да", "Нет"];
+				//функция подбора ответов через параметр num, первая цифра уровень вторая номер кнопки
+				function wayEmpl(num) {
+					//работники
+
+					if (num == 00) {
+						generatorEmpl(level_wifi, 1);
+						countDown();
+					}
+					if (num == 01) {
+						generatorEmpl(level_email_no, 5);
+						countDown();
+					}
+					if (num == 02) {
+						generatorEmpl(level_wifi_no, 7);
+						countDown();
+					}
+					if (num == 10) {
+						generatorEmpl(level_wifi_yes, 2);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 11) {
+						generatorEmpl(level_wifi_no, 3);
+						countDown();
+					}
+					if (num == 30) {
+						generatorEmpl(level_email_yes, 4);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 31) {
+						generatorEmpl(level_email_no, 5);
+						countDown();
+					}
+					if (num == 50) {
+						generatorEmpl(level_email, 6);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 51) {
+						generatorEmpl(level_email, 6);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 52) {
+						generatorEmpl(level_email, 6);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 70) {
+						generatorEmpl(level_wifi_yes, 8);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 71) {
+						generatorEmpl(level_wifi_yes, 6);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+				}
+				function wayStud(num) {
+					//cтуденты
+
+					if (num == 100) {
+						generatorStud(level_wifi_stud_foreigner, 11);
+						countDown();
+					}
+					if (num == 102) {
+						generatorStud(level_wifi_yes, 16);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 103) {
+						generatorStud(level_wifi_yes, 17);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 1110) {
+						generatorStud(level_wifi_yes, 12);
+						document.getElementById('but').style.display='none';
+						countDown();
+					}
+					if (num == 1111) {
+						generatorStud(level_wifi_stud, 9);
+						countDown();
+					}
+					if (num == 190) {
+						generatorStud(level_wifi_yes, 10);
+						document.getElementById('but').style.display='none';
+						countDown();							
+					}						
+					if (num == 191) {
+						generatorStud(level_wifi_yes, 13);
+						document.getElementById('but').style.display='none';
+						countDown();							
+					}	
+					if (num == 101) {
+						generatorStud(level_wifi_stud, 14);
+						countDown();
+					}
+					if (num == 1140) {
+						generatorStud(level_wifi_yes, 15);
+						document.getElementById('but').style.display='none';
+						countDown();						
+					}
+					if (num == 1141) {
+						generatorStud(level_wifi_yes, 13);
+						document.getElementById('but').style.display='none';
+						countDown();						
+					}
+				}
+
+				/*function restartPage(){
+					var timerId = setTimeout(function(){location.reload()}, 3000)
+				}*/
+
+				//генератор кнопок работник
+				function generatorEmpl(level, question_number){
+					document.getElementById('question_text').innerHTML = "<p>"+ question[question_number] +"<p>";
+					document.getElementById('but').innerHTML = "<div id='cleaner'></div>";	
+					for (var i = 0; i < level.length; i++){
+						var butdiv = document.createElement('div');
+						butdiv.innerHTML = "<button onmousedown='wayEmpl("+ question_number + i +")' class='myButton' id='option"+ i +"'>"+ level[i] +"</button>";
+						document.getElementById('but').appendChild(butdiv);
+					}			
+				}
+				//генератор кнопок студент				
+				function generatorStud(level, question_number){
+					document.getElementById('question_text').innerHTML = "<p>"+ question[question_number] +"<p>";
+					document.getElementById('but').innerHTML = "<div id='cleaner'></div>";	
+					for (var i = 0; i < level.length; i++){
+						var butdiv = document.createElement('div');
+						butdiv.innerHTML = "<button onmousedown='wayStud(1"+ question_number + i +")' class='myButton' id='option"+ i +"'>"+ level[i] +"</button>";
+						document.getElementById('but').appendChild(butdiv);
+					}			
+				}
+
+				function sotr(){
+					document.getElementById('area').style.display='block'; //
+					document.getElementById('start_stud').style.display='none';
+					document.getElementById('start_sotr').style.display='none';
+					document.getElementById('end').style.display='inline';
+					generatorEmpl(level0, 0);
+					countDown(60);
+				}
+				function stud(){
+					document.getElementById('area').style.display='block'; //
+					document.getElementById('start_stud').style.display='none';
+					document.getElementById('start_sotr').style.display='none';
+					document.getElementById('end').style.display='inline';
+					generatorStud(level_stud, 0);
+					countDown(60);
+				}
+
+				//обновление страницы
+				(function(seconds) {
+				    var refresh,       
+				        intvrefresh = function() {
+				            clearInterval(refresh);
+				            refresh = setTimeout(function() {
+				               location.href = location.href;
+				            }, seconds * 1000);
+				        };
+
+				    $(document).on('keypress click', function() { intvrefresh() });
+				    intvrefresh();
+
+				}(60));
+				
+				//Таймер
+				/*var interval;
+				function countDown() {
+					var sec = 60;
+					if (timerStoper == 2){									
+						var interval = setInterval(function() {												        
+					        var digit='<div style="width:70px;float:left;text-align:center">'+
+					        '<div style="font-family:arial;;font-size:65px;">';
+					        var text='</div><div>';
+					        document.getElementById('mytimer').innerHTML = '<div class="timer">Осталось</div>'+digit+sec+text+'Секунд';
+					        sec = sec - 1;					   					        					        					        					        		              				    				  
+						}, 1000);
+					}
+
+					timerStoper = 3;
+					if (timerStoper == 3) {
+							alert(timeStoper)
+							clearInterval(interval);
+							countDown();	
+					}
+					alert(timerStoper);
+					alert(interval);
+					alert(tim);										
+				}*/
+				</script>	
+	
+			</center>
+
+		</div>
+	
+	</div>	
+	<center>
+		<button id="start_stud" class="myButton menu_stud" onmousedown="stud()">Студент</button>
+		<br>
+		<br> 
+		<button style="margin-top: 10%" id="start_sotr" class="myButton menu_sotr" onmousedown="sotr()">Сотрудник</button>
+	<center>
+	<script type="text/javascript"> 
+		var curent_url = document.URL; document.write
+		("<div class='back'><a id='end' style='display: none;' class='myButton' href='" + curent_url + "'>Начать сначала</a></div>");
+	</script>	
+
+
+</body>
+</html>
