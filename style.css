@@ -72,3 +72,7 @@ body{background: #007dc1;}
 	 	padding-top: 5%;
 	 	color: #ffffff;
 	}
+	.bigButton {
+		width: 400px;
+	 	height: 200px;
+	}
